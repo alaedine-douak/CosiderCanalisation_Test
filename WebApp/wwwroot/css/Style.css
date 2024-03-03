@@ -1,0 +1,16 @@
+﻿.breadcrumb {
+    --bs-breadcrumb-margin-bottom: 0 !important;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+td, th {
+    padding: 6px 0;
+    text-align: center;
+    font-size: .8rem;
+    font-weight: 400;
+    border: 1px solid black;
+}

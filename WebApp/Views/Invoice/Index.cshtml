@@ -1,0 +1,58 @@
+﻿@model IEnumerable<InvoiceViewModel>
+
+@{
+    ViewData["Title"] = "Factures";
+}
+
+<nav aria-label="breadcrumb" class="d-flex justify-content-between border rounded py-2 px-2">
+    <ol class="breadcrumb flex-grow-1" style="padding-top: 2px;">
+        <li class="breadcrumb-item"> 
+            <i class="bi bi-house-fill text-info"></i>
+        </li>
+        <li class="breadcrumb-item active text-secondary" aria-current="page">Les factures</li>
+    </ol>
+    <div class="pe-3 flex-grow-1">
+        <form asp-action="SearchByInvoiceItem" method="post">
+            <div class="input-group">
+                <input 
+                    type="search" 
+                    class="form-control form-control-sm" 
+                    id="search-input"
+                    name="itemLibelle"
+                    placeholder="Recherche par des items libellé..." />
+            </div>
+        </form>
+    </div>
+</nav>
+
+<div class="mt-4">
+    <table class="table table-hover" id="tbl_invoices">
+        <thead>
+            <tr>
+                <th>Facture ID</th>
+                <th>Facture Date</th>
+                <th>Client Nom</th>
+                <th>Fournisseur Nom</th>
+                <th>Montant TTC</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var invoice in Model)
+            {
+                <tr>
+                    <td class="text-start">@invoice.InvoiceID</td>
+                    <td class="text-start">@invoice.InvoiceDate</td>
+                    <td class="text-start">@invoice.ClientName</td>
+                    <td class="text-start">@invoice.SupplierName</td>
+                    <td class="text-start">@string.Format("{0:0.00}", invoice.ItemsPriceAfterTax)</td>
+                    <td>
+                        <a class="btn btn-sm btn-success" asp-action="Detail" asp-route-invoiceId="@invoice.InvoiceID">Afficher</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<script src="~/js/invoiceItemSearch.js"></script>

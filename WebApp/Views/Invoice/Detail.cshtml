@@ -1,0 +1,82 @@
+﻿@model InvoiceViewModel
+
+@{
+    ViewData["title"] = "Détails de la facture";
+}
+
+<div class="">
+    <div class="pb-2 ps-0">
+        <p class="fw-bold mb-0">Facture №: @Model.InvoiceID</p>
+        <small>Date de facture: @Model.InvoiceDate</small>
+    </div>
+</div>
+<div class="d-flex justify-content-around mt-4">
+    <div class="flex-fill col-8">
+        <table class=" table table-hover py-1">
+            <thead>
+                <tr>
+                    <th>Item Libelle</th>
+                    <th>Unité d’Item</th>
+                    <th>Quantité d’item</th>
+                    <th>Prix d’item</th>
+                    <th>Taxe d’item</th>
+                    <th>Montant d’item TTC</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.InvoiceItems)
+                {
+                    <tr>
+                        <td class="text-start">@item.ItemLibelle</td>
+                        <td class="text-start">@item.ItemUnit</td>
+                        <td class="text-start">@item.ItemQuantity</td>
+                        <td class="text-start">@string.Format("{0:0.00}", item.ItemPrice) x @(item.ItemQuantity)</td>
+                        <td class="text-start">@string.Format("{0:0.00}", item.ItemTax) x @(item.ItemQuantity)</td>
+                        <td class="text-start">@(string.Format("{0:0.00}", (item.ItemPrice * item.ItemQuantity) + (item.ItemTax *item.ItemQuantity)))</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="flex-fill ms-auto col-4">
+        <div class="ms-3 pt-2">
+            <div class="d-flex flex-column">
+                <div class="d-flex justify-content-between">
+                    <h5 style="font-size: 16px;">Fournisseur:</h5>
+                    <span class="fw-normal fst-italic">@Model.SupplierName</span>
+                </div>
+                <div class="d-flex justify-content-between">
+                    <h5 style="font-size: 16px;">Client:</h5>
+                    <span class="fw-normal fst-italic">@Model.ClientName</span>
+                </div>
+            </div>
+            <hr style="margin: .6rem 0;" />
+
+            <div class="mb-2">
+                <div class="d-flex justify-content-between">
+                    <h5 style="font-size: 14px;" class="fw-normal">Total:</h5>
+                    <span style="font-size: 14px;" class="fw-normal">
+                        @string.Format("{0:0.00}", Model.ItemsPriceBeforeTax)
+                    </span>
+                </div>
+                <div class="d-flex justify-content-between">
+                    <h5 style="font-size: 14px;" class="fw-normal">TVA:</h5>
+                    <span style="font-size: 14px;" class="fw-normal">
+                        @string.Format("{0:0.00}", Model.TaxAmount)
+                    </span>
+                </div>
+                <div class="d-flex justify-content-between">
+                    <h5 style="font-size: 14px;" class="fst-italic">Total TTC:</h5>
+                    <span style="font-size: 14px;" class="fw-normal">
+                        @string.Format("{0:0.00}", Model.ItemsPriceAfterTax)
+                    </span>
+                </div>
+            </div>
+
+            <div>
+                <a asp-action="GeneratePdfInvoice" asp-route-invoiceId="@Model.InvoiceID" class="btn btn-sm btn-primary mb-3 me-2">Imprimer la facture</a>
+                <a asp-action="Index" class="btn btn-sm btn-secondary mb-3">Retour à la liste des factures</a>
+            </div>
+        </div>
+    </div>
+</div>
