@@ -4,6 +4,7 @@ using QuestPDF.Helpers;
 using QuestPDF.Infrastructure;
 using WebApp.Utility.PdfComponents;
 
+
 namespace WebApp.Utility;
 
 public class PdfInvoiceDocument : IPdfInvoiceDocument
@@ -43,8 +44,8 @@ public class PdfInvoiceDocument : IPdfInvoiceDocument
                         column.Item().AlignRight().PaddingRight(70).Text(text =>
                         {
                             text.Span("Date de facture:  ").FontSize(11);
-                            text.Span(string.Join("/", Invoice.InvoiceDate.Split("-").Reverse().ToArray()))
-                                .FontSize(11);
+                            //text.Span("23 Jan 2024").FontSize(11);
+                            text.Span(Invoice.InvoiceDate).FontSize(11);
                         });
                     });
                 });

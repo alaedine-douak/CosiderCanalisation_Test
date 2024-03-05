@@ -25,7 +25,7 @@ public class InvoiceController : Controller
         var invoiceModel = invoices.Select(x => new InvoiceViewModel
         {
             InvoiceID = x.InvoiceID,
-            InvoiceDate = DateOnly.ParseExact(x.InvoiceDate, "yyyy-mm-dd"),
+            InvoiceDate = DateOnly.ParseExact(x.InvoiceDate, "yyyy-MM-dd"),
             ClientName = x.ClientName,
             SupplierName = x.SupplierName,
             ItemsPriceAfterTax = x.InvoiceItems.Select(i => (i.ItemPrice * i.ItemQuantity) + i.ItemTax).Sum()
@@ -49,7 +49,7 @@ public class InvoiceController : Controller
             var invoiceViewModel = new InvoiceViewModel
             {
                 InvoiceID = selectedInvoice.InvoiceID,
-                InvoiceDate = DateOnly.ParseExact(selectedInvoice.InvoiceDate, "yyyy-mm-dd"),
+                InvoiceDate = DateOnly.ParseExact(selectedInvoice.InvoiceDate, "yyyy-MM-dd"),
                 ClientName = selectedInvoice.ClientName,
                 SupplierName = selectedInvoice.SupplierName,
                 ItemsPriceBeforeTax = selectedInvoice.InvoiceItems.Select(x => x.ItemPrice * x.ItemQuantity).Sum(),
@@ -70,11 +70,11 @@ public class InvoiceController : Controller
         var invoices = await _invoiceService.GetAllInvoices();
 
 
-        var invoiceModel = invoices.Select(invoice => 
-            new Invoice 
+        var invoiceModel = invoices.Select(invoice =>
+            new Invoice
             {
                 InvoiceID = invoice.InvoiceID,
-                InvoiceDate = invoice.InvoiceDate,
+                InvoiceDate = invoice.InvoiceDate.FormatDateToFrenchDate("dd MMM yyyy"),
                 SupplierName = invoice.SupplierName,
                 ClientName = invoice.ClientName,
                 InvoiceItems = invoice.InvoiceItems.Select(item => new InvoiceItem
