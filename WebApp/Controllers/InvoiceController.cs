@@ -28,7 +28,7 @@ public class InvoiceController : Controller
             InvoiceDate = DateOnly.ParseExact(x.InvoiceDate, "yyyy-MM-dd"),
             ClientName = x.ClientName,
             SupplierName = x.SupplierName,
-            ItemsPriceAfterTax = x.InvoiceItems.Select(i => (i.ItemPrice * i.ItemQuantity) + i.ItemTax).Sum()
+            ItemsPriceAfterTax = x.InvoiceItems.Select(i => (i.ItemPrice * i.ItemQuantity) + (i.ItemTax * i.ItemQuantity)).Sum()
         })
         .ToList();
 
@@ -116,7 +116,7 @@ public class InvoiceController : Controller
             var invoicesModel = invoices.Select(invoice => new InvoiceViewModel
             {
                 InvoiceID = invoice.InvoiceID,
-                InvoiceDate = DateOnly.ParseExact(invoice.InvoiceDate, "yyyy-mm-dd"),
+                InvoiceDate = DateOnly.ParseExact(invoice.InvoiceDate, "yyyy-MM-dd"),
                 ClientName = invoice.ClientName,
                 SupplierName = invoice.SupplierName,
                 ItemsPriceAfterTax = invoice.InvoiceItems.Select(x => (x.ItemPrice * x.ItemQuantity) + (x.ItemTax * x.ItemQuantity)).Sum(),
