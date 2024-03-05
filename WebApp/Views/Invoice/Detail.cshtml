@@ -74,7 +74,8 @@
             </div>
 
             <div>
-                <a asp-action="GeneratePdfInvoice" asp-route-invoiceId="@Model.InvoiceID" class="btn btn-sm btn-primary mb-3 me-2">Imprimer la facture</a>
+                <a asp-action="GeneratePdfInvoice" asp-route-invoiceId="@Model.InvoiceID" 
+                    class="btn btn-sm btn-primary mb-3 me-2" target="_blank">Imprimer la facture</a>
                 <a asp-action="Index" class="btn btn-sm btn-secondary mb-3">Retour à la liste des factures</a>
             </div>
         </div>
